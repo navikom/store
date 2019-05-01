@@ -10,11 +10,13 @@ import {
 } from 'react-native';
 import { WebBrowser, Icon } from 'expo';
 
-import { MonoText } from '../components/StyledText';
+import {HeaderLeftMenu, HeaderRightMenu, MonoText} from '../../components';
 
-export default class HomeScreen extends React.Component {
+export class HomeScreen extends React.Component {
   static navigationOptions = {
-    header: <Text>Hello World</Text>,
+    title: 'Home',
+    headerLeft: <HeaderLeftMenu/>,
+    headerRight: <HeaderRightMenu/>
   };
 
   render() {
@@ -25,8 +27,8 @@ export default class HomeScreen extends React.Component {
             <Image
               source={
                 __DEV__
-                  ? require('../assets/images/robot-dev.png')
-                  : require('../assets/images/robot-prod.png')
+                  ? require('../../assets/images/robot-dev.png')
+                  : require('../../assets/images/robot-prod.png')
               }
               style={styles.welcomeImage}
             />
