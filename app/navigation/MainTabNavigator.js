@@ -3,11 +3,14 @@ import {Platform} from 'react-native';
 import {createStackNavigator, createBottomTabNavigator} from 'react-navigation';
 
 import {TabBarIcon} from '../components';
-import {tabRoutes} from './routes';
+
+import Drawers from './MainDrawerNavigator';
 
 const stackNavigator = props => {
   const stack = createStackNavigator({
     Screen: props.screen,
+  }, {
+    headerMode: 'none',
   });
 
   stack.navigationOptions = {
@@ -26,7 +29,7 @@ const stackNavigator = props => {
   return stack;
 };
 
-const TabRoutes = tabRoutes.map(props => stackNavigator(props));
+const TabRoutes = Drawers.map(props => stackNavigator(props));
 
 export default createBottomTabNavigator({
   ...TabRoutes

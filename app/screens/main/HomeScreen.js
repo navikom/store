@@ -13,11 +13,11 @@ import { WebBrowser, Icon } from 'expo';
 import {HeaderLeftMenu, HeaderRightMenu, MonoText} from '../../components';
 
 export class HomeScreen extends React.Component {
-  static navigationOptions = {
+  static navigationOptions = ({navigation}) => ({
     title: 'Home',
-    headerLeft: <HeaderLeftMenu/>,
-    headerRight: <HeaderRightMenu/>
-  };
+    headerLeft: <HeaderLeftMenu navigation={navigation}/>,
+    headerRight: <HeaderRightMenu navigation={navigation}/>
+  });
 
   render() {
     return (

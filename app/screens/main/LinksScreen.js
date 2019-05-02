@@ -1,6 +1,7 @@
 import React from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { ExpoLinksView } from '@expo/samples';
+import Colors from '../../constants/Colors';
 
 export class LinksScreen extends React.Component {
   static navigationOptions = {
@@ -22,6 +23,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 15,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.screen.base
   },
 });

@@ -1,5 +1,6 @@
-import {HomeScreen, LinksScreen, SettingsScreen} from '../screens';
-import {HOME_SCREEN, LINKS_SCREEN, SETTINGS_SCREEN} from '../constants';
+import {HomeScreen, LinksScreen, SettingsScreen} from '../screens/main';
+import {Loader} from '../screens/others';
+import {HOME_SCREEN, LINKS_SCREEN, LOADER_SCREEN, SETTINGS_SCREEN} from '../constants';
 
 export const tabRoutes = [
   {
@@ -29,4 +30,17 @@ export const tabRoutes = [
       android: 'md-options'
     }
   }
+];
+
+export const Menus = {
+  Customer: tabRoutes,
+  Anonymous: tabRoutes
+};
+
+export default [
+  {
+    id: LOADER_SCREEN,
+    screen: Loader,
+  },
+  ...tabRoutes
 ];
