@@ -1,8 +1,9 @@
 import {HomeScreen, LinksScreen, SettingsScreen} from '../screens/main';
 import {Loader} from '../screens/others';
-import {HOME_SCREEN, LINKS_SCREEN, LOADER_SCREEN, SETTINGS_SCREEN} from '../constants';
+import {Map} from '../screens/map';
+import {HOME_SCREEN, LINKS_SCREEN, LOADER_SCREEN, MAP_SCREEN, SETTINGS_SCREEN} from '../constants';
 
-export const tabRoutes = [
+export const routes = [
   {
     id: HOME_SCREEN,
     label: 'Home',
@@ -29,12 +30,21 @@ export const tabRoutes = [
       ios: 'ios-options',
       android: 'md-options'
     }
+  },
+  {
+    id: MAP_SCREEN,
+    label: 'Map',
+    screen: Map,
+    icon:  {
+      ios: 'ios-map',
+      android: 'md-map'
+    }
   }
 ];
 
 export const Menus = {
-  Customer: tabRoutes,
-  Anonymous: tabRoutes
+  Customer: routes,
+  Anonymous: routes
 };
 
 export default [
@@ -42,5 +52,5 @@ export default [
     id: LOADER_SCREEN,
     screen: Loader,
   },
-  ...tabRoutes
+  ...routes
 ];

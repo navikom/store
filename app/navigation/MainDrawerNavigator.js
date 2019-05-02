@@ -59,7 +59,7 @@ const tabs = [{
     routes[props.id] = stackNavigator(props);
     return routes;
   }, {}),
-  label: 'Products',
+  label: 'Catalog',
   icon: {
     ios: 'ios-cart',
     android: 'md-cart'
