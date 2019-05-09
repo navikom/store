@@ -1,1 +1,1 @@
-export * from './TabBarIcon';
+export {default as TabBarIcon} from './TabBarIcon';

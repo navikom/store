@@ -1,1 +1,1 @@
-export * from './StyledText';
+export {default as MonoText} from './StyledText';

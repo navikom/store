@@ -1,50 +1,58 @@
-import {HomeScreen, LinksScreen, SettingsScreen} from '../screens/main';
-import {Loader} from '../screens/others';
+import {Home} from '../screens/main';
+import {Loader, Settings} from '../screens/others';
 import {Map} from '../screens/map';
-import {HOME_SCREEN, LINKS_SCREEN, LOADER_SCREEN, MAP_SCREEN, SETTINGS_SCREEN} from '../constants';
+import {CATALOG_SCREEN, HOME_SCREEN, LOADER_SCREEN, MAP_SCREEN, POSTS_SCREEN, SETTINGS_SCREEN} from '../constants';
+import {Catalog} from '../screens/catalog';
+import {Posts} from '../screens/news';
 
-export const routes = [
+const catalogRoutes = [
+  {
+    id: CATALOG_SCREEN,
+    label: 'Catalog',
+    screen: Catalog,
+    icon: 'shopping-cart'
+  }
+];
+
+export const profileRoutes = [
   {
     id: HOME_SCREEN,
     label: 'Home',
-    screen: HomeScreen,
-    icon:  {
-      ios: focused => `ios-information-circle${focused ? '' : '-outline'}`,
-      android: 'md-information-circle'
-    }
-  },
-  {
-    id: LINKS_SCREEN,
-    label: 'Links',
-    screen: LinksScreen,
-    icon:  {
-      ios: 'ios-link',
-      android: 'md-link'
-    }
-  },
-  {
-    id: SETTINGS_SCREEN,
-    label: 'Settings',
-    screen: SettingsScreen,
-    icon:  {
-      ios: 'ios-options',
-      android: 'md-options'
-    }
+    screen: Home,
+    icon: 'home'
   },
   {
     id: MAP_SCREEN,
     label: 'Map',
     screen: Map,
-    icon:  {
-      ios: 'ios-map',
-      android: 'md-map'
-    }
+    icon: 'map'
+  },
+  {
+    id: SETTINGS_SCREEN,
+    label: 'Settings',
+    screen: Settings,
+    icon: 'settings'
   }
 ];
 
+export const newsRoutes = [
+  {
+    id: POSTS_SCREEN,
+    label: 'Posts',
+    screen: Posts,
+    icon: 'art-track'
+  }
+];
+
+const routes = {
+  Catalog: catalogRoutes,
+  Profile: profileRoutes,
+  News: newsRoutes
+};
+
 export const Menus = {
-  Customer: routes,
-  Anonymous: routes
+  Customer: key => routes[key],
+  Anonymous: key => routes[key]
 };
 
 export default [
@@ -52,5 +60,7 @@ export default [
     id: LOADER_SCREEN,
     screen: Loader,
   },
-  ...routes
+  ...catalogRoutes,
+  ...profileRoutes,
+  ...newsRoutes
 ];

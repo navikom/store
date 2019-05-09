@@ -1,10 +1,11 @@
 import React from 'react';
 import {createStackNavigator, createDrawerNavigator} from 'react-navigation';
 
-import routes from './routes';
-import {HOME_SCREEN} from '../constants';
+import routes, {newsRoutes, profileRoutes} from './routes';
+import {CATALOG_SCREEN, HOME_SCREEN, POSTS_SCREEN, SETTINGS_SCREEN} from '../constants';
 import {LeftSideMenu, RightSideMenu} from '../screens';
 import Layout from '../constants/Layout';
+import {GoBack} from '../components';
 
 let flatRoutes = routes.reduce((routes, route) => {
   routes[route.id] = route;
@@ -17,7 +18,19 @@ const stackNavigator = props => {
     {
       initialRouteName: props.id,
       headerMode: 'screen',
-      cardStyle: {backgroundColor: 'transparent'}
+      cardStyle: {
+        backgroundColor: 'transparent',
+      },
+      defaultNavigationOptions: {
+        headerBackImage: <GoBack/>,
+        headerBackTitle: null,
+        headerStyle: {
+          elevation: 0,       //remove shadow on Android
+          shadowOpacity: 0,   //remove shadow on iOS
+          shadowColor: 'transparent',
+          borderBottomWidth: 0
+        }
+      }
     });
   return stack;
 };
@@ -33,7 +46,7 @@ const makeDrawer = (tab) => {
       drawerCloseRoute: 'LeftSideMenuClose',
       drawerToggleRoute: 'LeftSideMenuToggle',
       drawerPosition: 'left',
-      contentComponent: (props) => <LeftSideMenu { ...props }/>,
+      contentComponent: (props) => <LeftSideMenu { ...props } tab={ label }/>,
     });
   return {
     screen: createDrawerNavigator({
@@ -46,28 +59,31 @@ const makeDrawer = (tab) => {
       drawerCloseRoute: 'RightSideMenuClose',
       drawerToggleRoute: 'RightSideMenuToggle',
       drawerWidth: Math.min(Layout.window.height, Layout.window.width) * 0.85,
-      contentComponent: (props) => <RightSideMenu { ...props }/>,
+      contentComponent: (props) => <RightSideMenu { ...props } tab={ label }/>,
     }),
     label,
     icon
   }
 };
 
-const tabs = [{
-  initialRouteName: HOME_SCREEN,
-  routes: routes.reduce((routes, props) => {
-    routes[props.id] = stackNavigator(props);
-    return routes;
-  }, {}),
-  label: 'Catalog',
-  icon: {
-    ios: 'ios-cart',
-    android: 'md-cart'
-  }
-},
+const tabs = [
+  {
+    initialRouteName: CATALOG_SCREEN,
+    index: 1,
+    routes: routes.reduce((routes, props) => {
+      routes[props.id] = stackNavigator(props);
+      return routes;
+    }, {}),
+    label: 'Catalog',
+    icon: {
+      ios: 'ios-cart',
+      android: 'md-cart'
+    },
+  },
   {
     initialRouteName: HOME_SCREEN,
-    routes: routes.reduce((routes, props) => {
+    index: 2,
+    routes: profileRoutes.reduce((routes, props) => {
       routes[props.id] = stackNavigator(props);
       return routes;
     }, {}),
@@ -75,11 +91,12 @@ const tabs = [{
     icon: {
       ios: 'ios-person',
       android: 'md-person'
-    }
+    },
   },
   {
-    initialRouteName: HOME_SCREEN,
-    routes: routes.reduce((routes, props) => {
+    initialRouteName: POSTS_SCREEN,
+    index: 3,
+    routes: newsRoutes.reduce((routes, props) => {
       routes[props.id] = stackNavigator(props);
       return routes;
     }, {}),
@@ -87,7 +104,7 @@ const tabs = [{
     icon: {
       ios: 'ios-book',
       android: 'md-book'
-    }
+    },
   }];
 
 export default tabs.map(tab => makeDrawer(tab));

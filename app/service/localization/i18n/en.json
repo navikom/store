@@ -1,3 +1,11 @@
 {
-  "Map": "Map"
+  "Map": "Map",
+  "Home": "Home",
+  "Catalog": "Catalog",
+  "Profile": "Profile",
+  "News": "News",
+  "Posts": "Posts",
+  "Settings": "Settings",
+  "Language": "Language",
+  "DarkTheme": "Dark Theme"
 }

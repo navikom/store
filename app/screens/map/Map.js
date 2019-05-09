@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import {MapView, Location, Permissions} from 'expo';
-import Colors from '../../constants/Colors';
-import {i18n} from '../../service';
+import {Title} from '../../components/header';
 
 export class Map extends Component {
   static navigationOptions = {
-    title: i18n.value('Map'),
+    headerTitle: <Title text='Map' />,
   };
   state = {
     mapRegion: null,
@@ -19,7 +18,6 @@ export class Map extends Component {
   }
 
   _handleMapRegionChange = mapRegion => {
-    console.log(mapRegion);
     this.setState({mapRegion});
   };
 
@@ -78,6 +76,5 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: Colors.screen.base,
   }
 });

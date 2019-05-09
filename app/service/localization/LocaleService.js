@@ -9,13 +9,14 @@ class LocaleService {
     });
     I18n.fallbacks = true;
     I18n.translations = {
-      'en': require('./i18n/en.json')
+      en: require('./i18n/en.json'),
+      ru: require('./i18n/ru.json')
     };
     this.flags = {
-      pl: require('../../assets/images/flags/usa.png'),
+      en: require('../../assets/images/flags/usa.png'),
+      ru: require('../../assets/images/flags/ru.png'),
     };
     I18n.locale = Localization.locale;
-    console.log(Localization)
     this.default = 'en';
     this.setLocales();
   }
@@ -41,17 +42,10 @@ class LocaleService {
     this.locales = Object.keys(I18n.translations);
   }
 
-  safeValue(key, defaults, values) {
-    if (this.exists(key)) {
-      return this.value(key, values)
-    } else {
-      return this.value(defaults)
-    }
-  }
-
   setLocale(locale) {
     I18n.locale = locale;
     AsyncStorage.setItem('language', locale);
+    this.storedLanguage = locale;
   }
 
   exists(key) {

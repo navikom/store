@@ -1,23 +1,40 @@
 import React from 'react';
-import {View, ScrollView, StyleSheet, TouchableOpacity, Text} from 'react-native';
+import {View, ScrollView, StyleSheet} from 'react-native';
+import {Drawer, withTheme, Text, Divider} from 'react-native-paper';
 import {Menus} from '../../navigation/routes';
-import Colors from '../../constants/Colors';
+import config from '../../../app.json';
+import {i18n} from '../../service/localization';
 
-export class LeftSideMenu extends React.Component{
+class LeftSideMenu extends React.Component{
+  _header() {
+    const {theme} = this.props;
+    return (
+      <View style={styles.header}>
+
+        <Text style={{color: theme.colors.accent}}>{config.expo.name.toUpperCase()}</Text>
+      </View>
+    )
+  }
+
   _menu() {
-    return Menus.Anonymous.map(item => (
-      <TouchableOpacity
+    const {navigation} = this.props;
+    console.log(999, navigation.state.routes[navigation.state.index].routeName);
+    return Menus.Anonymous(this.props.tab).map(item => (
+      <Drawer.Item
+        label={i18n.value(item.label)}
         onPress={() => this.props.navigation.navigate(item.id)}
         key={item.id}
-        style={styles.row}>
-        <Text>{item.label}</Text>
-      </TouchableOpacity>
+        icon={item.icon}
+        style={styles.row}/>
     ))
   }
 
   render() {
+    const {theme} = this.props;
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, {backgroundColor: theme.colors.background}]}>
+        {this._header()}
+        <Divider/>
         <ScrollView style={styles.container}>
           {this._menu()}
         </ScrollView>
@@ -29,10 +46,16 @@ export class LeftSideMenu extends React.Component{
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.screen.base
   },
   row: {
     paddingVertical: 3,
     paddingLeft: 10
+  },
+  header: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 50
   }
 });
+
+export default withTheme(LeftSideMenu);

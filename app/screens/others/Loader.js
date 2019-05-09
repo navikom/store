@@ -1,7 +1,6 @@
 import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {StackActions, NavigationActions} from 'react-navigation';
-import Colors from '../../constants/Colors';
 
 export class Loader extends React.Component {
   componentDidMount() {
@@ -31,7 +30,6 @@ export class Loader extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.screen.base
   },
   center: {
     alignItems: 'center',

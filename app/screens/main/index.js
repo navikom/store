@@ -1,3 +1,1 @@
-export * from './HomeScreen';
-export * from './LinksScreen';
-export * from './SettingsScreen';
+export {default as Home} from './Home';

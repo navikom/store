@@ -1,20 +1,20 @@
 import React from 'react';
-import {Platform} from 'react-native';
+import {Platform, Text} from 'react-native';
 import {createStackNavigator, createBottomTabNavigator} from 'react-navigation';
 
-import {TabBarIcon} from '../components';
+import {TabBarIcon, MonoText} from '../components';
 
 import Drawers from './MainDrawerNavigator';
 
 const stackNavigator = props => {
-  const stack = createStackNavigator({
+  const stackItem = createStackNavigator({
     Screen: props.screen,
   }, {
-    headerMode: 'none',
+    headerMode: 'none'
   });
 
-  stack.navigationOptions = {
-    tabBarLabel: props.label,
+  stackItem.navigationOptions = {
+    tabBarLabel: labelProps => <MonoText {...labelProps} text={props.label}/>,
     tabBarIcon: ({focused}) => (
       <TabBarIcon
         focused={ focused }
@@ -26,11 +26,17 @@ const stackNavigator = props => {
       />
     )
   };
-  return stack;
+  return stackItem;
 };
 
-const TabRoutes = Drawers.map(props => stackNavigator(props));
+
+const TabRoutes = Drawers.reduce((tabs, props) => {
+  tabs[props.label] = stackNavigator(props);
+  return tabs;
+}, {});
+
 
 export default createBottomTabNavigator({
-  ...TabRoutes
-});
+    ...TabRoutes
+  });
+

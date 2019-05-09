@@ -1,12 +1,39 @@
 import React from 'react';
-import {Platform, StatusBar, StyleSheet, SafeAreaView} from 'react-native';
-import {AppLoading, Asset, Font, Icon} from 'expo';
+import {Platform, StatusBar, StyleSheet, SafeAreaView, I18nManager, AsyncStorage} from 'react-native';
+import {AppLoading, Asset, Font, Icon, Updates} from 'expo';
+import {Provider as PaperProvider} from 'react-native-paper';
 import AppNavigator from './app/navigation/AppNavigator';
+import {MainContext} from './app/contexts';
+import * as themes from './app/config/theme';
+import {i18n} from './app/service/localization';
+
+const getStorageValue = (array, key) => array.filter(f => f[0] === key)[0][1] === key;
 
 export default class App extends React.Component {
-  state = {
-    isLoadingComplete: false,
-  };
+  constructor(props) {
+    super(props)
+    this.state = {
+      isLoadingComplete: false,
+      theme: themes['lightTheme'],
+      rtl: false,
+      isDark: false,
+      locale: i18n.locale,
+      toggleTheme: this._toggleTheme,
+      toggleRTL: this._toggleRTL,
+      changeLocale: this._changeLocale
+    };
+  }
+
+  async componentWillMount() {
+    const settings = await AsyncStorage.multiGet(['rtl', 'isDark']);
+    const rtl = getStorageValue(settings, 'rtl');
+    const isDark = getStorageValue(settings, 'isDark');
+    this.setState(
+      {rtl, isDark},
+      () => {
+        I18nManager.forceRTL(rtl);
+      });
+  }
 
   _loadResourcesAsync = async () => {
     return Promise.all([
@@ -17,9 +44,11 @@ export default class App extends React.Component {
       Font.loadAsync({
         // This is the font that we are using for our tab bar
         ...Icon.Ionicons.font,
-        // We include SpaceMono because we use it in HomeScreen.js. Feel free
-        // to remove this if you are not using it in your app
-        'space-mono': require('./app/assets/fonts/SpaceMono-Regular.ttf'),
+        'Righteous-Regular': require('./app/assets/fonts/Righteous-Regular.ttf'),
+        'Roboto-Bold': require('./app/assets/fonts/Roboto-Bold.ttf'),
+        'Roboto-Medium': require('./app/assets/fonts/Roboto-Medium.ttf'),
+        'Roboto-Regular': require('./app/assets/fonts/Roboto-Regular.ttf'),
+        'Roboto-Light': require('./app/assets/fonts/Roboto-Light.ttf')
       }),
     ]);
   };
@@ -32,6 +61,27 @@ export default class App extends React.Component {
 
   _handleFinishLoading = () => {
     this.setState({isLoadingComplete: true});
+  };
+
+  _toggleTheme = key => {
+    this.setState({theme: themes[key]});
+    AsyncStorage.setItem('isDark', key === 'darkTheme' ? 'isDark' : 'none');
+  };
+
+  _toggleRTL = () => {
+    this.setState(
+      {rtl: !this.state.rtl},
+      () => {
+        I18nManager.forceRTL(this.state.rtl);
+        AsyncStorage.setItem('rtl', this.state.rtl ? 'rtl' : 'none');
+        Updates.reload();
+      });
+
+  };
+
+  _changeLocale = locale => {
+    i18n.setLocale(locale);
+    this.setState({locale});
   };
 
   render() {
@@ -47,7 +97,11 @@ export default class App extends React.Component {
       return (
         <SafeAreaView style={ styles.container }>
           { Platform.OS === 'ios' && <StatusBar barStyle="default"/> }
-          <AppNavigator/>
+          <PaperProvider theme={this.state.theme}>
+            <MainContext.Provider value={this.state}>
+              <AppNavigator/>
+            </MainContext.Provider>
+          </PaperProvider>
         </SafeAreaView>
       );
     }
