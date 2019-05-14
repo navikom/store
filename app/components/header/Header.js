@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import {Appbar} from 'react-native-paper';
+import {DrawerActions} from 'react-navigation';
 import {i18n} from '../../service/localization';
 import {withMainContext} from '../../contexts';
 
@@ -32,7 +33,7 @@ class Header extends React.Component{
   }
 
   _renderRest() {
-    return <Appbar.Action icon='more-vert' onPress={() => {}} />
+    return <Appbar.Action icon='more-vert' onPress={() => this.props.navigation.dispatch(DrawerActions.openDrawer())} />
   }
 
   render() {

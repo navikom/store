@@ -4,22 +4,24 @@ import {Drawer, withTheme, Text, Divider} from 'react-native-paper';
 import {Menus} from '../../navigation/routes';
 import config from '../../../app.json';
 import {i18n} from '../../service/localization';
+import {withMainContext} from '../../contexts';
 
 class LeftSideMenu extends React.Component{
   _header() {
-    const {theme} = this.props;
+    const {context} = this.props;
     return (
       <View style={styles.header}>
 
-        <Text style={{color: theme.colors.accent}}>{config.expo.name.toUpperCase()}</Text>
+        <Text style={{color: context.theme.colors.accent}}>{config.expo.name.toUpperCase()}</Text>
       </View>
     )
   }
 
   _menu() {
-    const {navigation} = this.props;
+    const {activeItemKey} = this.props;
     return Menus.Anonymous(this.props.tab).map(item => (
       <Drawer.Item
+        active={activeItemKey === item.id}
         label={i18n.value(item.label)}
         onPress={() => this.props.navigation.navigate(item.id)}
         key={item.id}
@@ -29,9 +31,9 @@ class LeftSideMenu extends React.Component{
   }
 
   render() {
-    const {theme} = this.props;
+    const {context} = this.props;
     return (
-      <View style={[styles.container, {backgroundColor: theme.colors.background}]}>
+      <View style={[styles.container, {backgroundColor: context.theme.colors.background}]}>
         {this._header()}
         <Divider/>
         <ScrollView style={styles.container}>
@@ -57,4 +59,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default withTheme(LeftSideMenu);
+export default withMainContext(LeftSideMenu);

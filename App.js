@@ -10,6 +10,17 @@ import {DARK_THEME, LIGHT_THEME} from './app/constants';
 
 const getStorageValue = (array, key) => array.filter(f => f[0] === key)[0][1] === key;
 
+function getCurrentRouteName(navigationState) {
+  if (!navigationState) {
+    return null;
+  }
+  const route = navigationState.routes[navigationState.index];
+  if (route.routes) {
+    return getCurrentRouteName(route);
+  }
+  return route.routeName;
+}
+
 export default class App extends React.Component {
   constructor(props) {
     super(props)
@@ -21,7 +32,8 @@ export default class App extends React.Component {
       locale: i18n.locale,
       toggleTheme: this._toggleTheme,
       toggleRTL: this._toggleRTL,
-      changeLocale: this._changeLocale
+      changeLocale: this._changeLocale,
+      currentScreen: null
     };
   }
 
@@ -87,6 +99,7 @@ export default class App extends React.Component {
   };
 
   render() {
+    const {theme} = this.state;
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
       return (
         <AppLoading
@@ -97,11 +110,17 @@ export default class App extends React.Component {
       );
     } else {
       return (
-        <SafeAreaView style={ styles.container }>
+        <SafeAreaView style={ [styles.container, {backgroundColor: theme.colors.background}] }>
           { Platform.OS === 'ios' && <StatusBar barStyle="default"/> }
-          <PaperProvider theme={this.state.theme}>
+          <PaperProvider theme={theme}>
             <MainContext.Provider value={this.state}>
-              <AppNavigator/>
+              <AppNavigator
+                onNavigationStateChange={ (prevState, currentState, action) => {
+                  const currentScreen = getCurrentRouteName(currentState);
+                  const prevScreen = getCurrentRouteName(prevState);
+                  currentScreen !== prevScreen && this.setState({currentScreen});
+                } }
+              />
             </MainContext.Provider>
           </PaperProvider>
         </SafeAreaView>
@@ -113,6 +132,5 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
   },
 });
