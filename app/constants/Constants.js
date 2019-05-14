@@ -10,3 +10,6 @@ export const SETTINGS_SCREEN = 'SettingsScreen';
 export const CATALOG_TAB = 'Catalog';
 export const PROFILE_TAB = 'Profile';
 export const NEWS_TAB = 'News';
+
+export const DARK_THEME = 'darkTheme';
+export const LIGHT_THEME = 'lightTheme';

@@ -55,7 +55,8 @@ export const darkTheme = {
     ...DarkTheme.colors,
     ...MainTheme.colors,
     tabIconSelected: MainTheme.colors.primary,
-    tabIconDefault: '#b3b3b3'
+    tabIconDefault: '#b3b3b3',
+    text: '#fff'
   },
   fonts: {
     ...MainTheme.fonts

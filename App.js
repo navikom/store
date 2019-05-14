@@ -6,6 +6,7 @@ import AppNavigator from './app/navigation/AppNavigator';
 import {MainContext} from './app/contexts';
 import * as themes from './app/config/theme';
 import {i18n} from './app/service/localization';
+import {DARK_THEME, LIGHT_THEME} from './app/constants';
 
 const getStorageValue = (array, key) => array.filter(f => f[0] === key)[0][1] === key;
 
@@ -14,7 +15,7 @@ export default class App extends React.Component {
     super(props)
     this.state = {
       isLoadingComplete: false,
-      theme: themes['lightTheme'],
+      theme: themes[LIGHT_THEME],
       rtl: false,
       isDark: false,
       locale: i18n.locale,
@@ -29,7 +30,7 @@ export default class App extends React.Component {
     const rtl = getStorageValue(settings, 'rtl');
     const isDark = getStorageValue(settings, 'isDark');
     this.setState(
-      {rtl, isDark},
+      {rtl, isDark, theme: themes[isDark ? DARK_THEME : LIGHT_THEME]},
       () => {
         I18nManager.forceRTL(rtl);
       });
@@ -63,9 +64,10 @@ export default class App extends React.Component {
     this.setState({isLoadingComplete: true});
   };
 
-  _toggleTheme = key => {
-    this.setState({theme: themes[key]});
-    AsyncStorage.setItem('isDark', key === 'darkTheme' ? 'isDark' : 'none');
+  _toggleTheme = value => {
+    const key = value ? DARK_THEME : LIGHT_THEME;
+    this.setState({theme: themes[key], isDark: value});
+    AsyncStorage.setItem('isDark', key === DARK_THEME ? 'isDark' : 'none');
   };
 
   _toggleRTL = () => {

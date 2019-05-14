@@ -1,36 +1,28 @@
 import React from 'react';
 import {createStackNavigator, createDrawerNavigator} from 'react-navigation';
-
+import {I18nManager} from 'react-native';
 import routes, {newsRoutes, profileRoutes} from './routes';
-import {CATALOG_SCREEN, HOME_SCREEN, POSTS_SCREEN, SETTINGS_SCREEN} from '../constants';
+import {CATALOG_SCREEN, HOME_SCREEN, POSTS_SCREEN} from '../constants';
 import {LeftSideMenu, RightSideMenu} from '../screens';
 import Layout from '../constants/Layout';
-import {GoBack} from '../components';
+import {Header} from '../components';
 
 let flatRoutes = routes.reduce((routes, route) => {
   routes[route.id] = route;
   return routes;
 }, {});
 
-
 const stackNavigator = props => {
   const stack = createStackNavigator(flatRoutes,
     {
       initialRouteName: props.id,
       headerMode: 'screen',
-      cardStyle: {
-        backgroundColor: 'transparent',
-      },
-      defaultNavigationOptions: {
-        headerBackImage: <GoBack/>,
-        headerBackTitle: null,
-        headerStyle: {
-          elevation: 0,       //remove shadow on Android
-          shadowOpacity: 0,   //remove shadow on iOS
-          shadowColor: 'transparent',
-          borderBottomWidth: 0
+      cardStyle: {backgroundColor: 'transparent'},
+      defaultNavigationOptions: ({navigation}) => ({
+        header: headerProps => {
+          return <Header navigation={ navigation } headerProps={ headerProps }/>
         }
-      }
+      })
     });
   return stack;
 };
@@ -45,7 +37,7 @@ const makeDrawer = (tab) => {
       drawerOpenRoute: 'LeftSideMenu',
       drawerCloseRoute: 'LeftSideMenuClose',
       drawerToggleRoute: 'LeftSideMenuToggle',
-      drawerPosition: 'left',
+      drawerPosition: I18nManager.isRTL ? 'right' : 'left',
       contentComponent: (props) => <LeftSideMenu { ...props } tab={ label }/>,
     });
   return {
@@ -54,7 +46,7 @@ const makeDrawer = (tab) => {
         screen: LeftMenu,
       },
     }, {
-      drawerPosition: 'right',
+      drawerPosition: I18nManager.isRTL ? 'left' : 'right',
       drawerOpenRoute: 'RightSideMenu',
       drawerCloseRoute: 'RightSideMenuClose',
       drawerToggleRoute: 'RightSideMenuToggle',

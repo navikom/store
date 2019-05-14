@@ -1,1 +1,1 @@
-export * from './Posts';
+export {default as Posts} from './Posts';

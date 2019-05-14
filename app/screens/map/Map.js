@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import {MapView, Location, Permissions} from 'expo';
-import {Title} from '../../components/header';
 
 export class Map extends Component {
   static navigationOptions = {
-    headerTitle: <Title text='Map' />,
+    title: 'Map',
   };
   state = {
     mapRegion: null,

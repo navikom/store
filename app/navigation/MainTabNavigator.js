@@ -1,10 +1,11 @@
 import React from 'react';
 import {Platform, Text} from 'react-native';
-import {createStackNavigator, createBottomTabNavigator} from 'react-navigation';
+import {createStackNavigator, createBottomTabNavigator, BottomTabBar} from 'react-navigation';
 
 import {TabBarIcon, MonoText} from '../components';
 
 import Drawers from './MainDrawerNavigator';
+import {Footer} from '../components/footer';
 
 const stackNavigator = props => {
   const stackItem = createStackNavigator({
@@ -38,5 +39,11 @@ const TabRoutes = Drawers.reduce((tabs, props) => {
 
 export default createBottomTabNavigator({
     ...TabRoutes
+  },
+  {
+    tabBarComponent: props => <Footer {...props}/>,
+    tabBarPosition: "bottom",
+    animationEnabled: true,
+    swipeEnabled: true
   });
 

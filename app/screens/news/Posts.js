@@ -1,17 +1,16 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {i18n} from '../../service/localization';
-import {HeaderLeftMenu, HeaderRightMenu, Title} from '../../components/header';
+import {withTheme} from 'react-native-paper';
 
-export class Posts extends React.Component {
+class Posts extends React.Component {
   static navigationOptions = ({navigation}) => ({
-    headerTitle: <Title text='Posts' />,
-    headerLeft: <HeaderLeftMenu navigation={navigation}/>,
-    headerRight: <HeaderRightMenu navigation={navigation}/>
+    title: 'Posts',
+    right: true
   });
   render() {
+    const {theme} = this.props;
     return (
-      <View style={styles.screen}/>
+      <View style={[styles.screen, {backgroundColor: theme.colors.background}]}/>
     )
   }
 }
@@ -21,3 +20,5 @@ const styles = StyleSheet.create({
     flex: 1
   }
 });
+
+export default withTheme(Posts)

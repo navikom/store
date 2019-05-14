@@ -5,22 +5,20 @@ import {
   View,
 } from 'react-native';
 
-import {HeaderLeftMenu, HeaderRightMenu, Title} from '../../components';
-import {i18n} from '../../service';
 import {withTheme} from 'react-native-paper';
 
 class Home extends React.Component {
-  static navigationOptions = (props) => {
+  static navigationOptions = ({navigation}) => {
     return {
-      headerTitle: <Title text='Home' />,
-      headerLeft: <HeaderLeftMenu navigation={props.navigation}/>,
-      headerRight: <HeaderRightMenu navigation={props.navigation}/>
+      title: 'Home',
+      right: true
     }
   };
 
   render() {
+    const {theme} = this.props;
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, {backgroundColor: theme.colors.background}]}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
 
         </ScrollView>

@@ -18,7 +18,6 @@ class LeftSideMenu extends React.Component{
 
   _menu() {
     const {navigation} = this.props;
-    console.log(999, navigation.state.routes[navigation.state.index].routeName);
     return Menus.Anonymous(this.props.tab).map(item => (
       <Drawer.Item
         label={i18n.value(item.label)}

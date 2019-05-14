@@ -2,14 +2,13 @@ import React from 'react';
 import {View, StyleSheet, Image, I18nManager} from 'react-native';
 import {i18n} from '../../service/localization';
 import {withTheme, Title, Divider, Switch} from 'react-native-paper';
-import {Title as HeaderTitle} from '../../components/header';
 import {Select} from '../../components/dropDown';
 import {MainContext} from '../../contexts';
 import {SETTINGS_SCREEN} from '../../constants';
 
 class SettingsScreen extends React.Component {
   static navigationOptions = {
-    headerTitle: <HeaderTitle text='Settings'/>,
+    title: 'Settings',
   };
 
   state = {
@@ -35,9 +34,9 @@ class SettingsScreen extends React.Component {
     return (
       <MainContext.Consumer>
         {
-          ({changeLocale, rtl, toggleRTL, toggleTheme, isDark}) => {
+          ({changeLocale, rtl, toggleRTL, toggleTheme, isDark, theme}) => {
             return (
-            <View style={styles.screen}>
+            <View style={[styles.screen, {backgroundColor: theme.colors.background}]}>
               <Divider/>
               <View style={[styles.row]}>
                 <Title>{i18n.value('Language')}</Title>
