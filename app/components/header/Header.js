@@ -4,6 +4,7 @@ import {Appbar} from 'react-native-paper';
 import {DrawerActions} from 'react-navigation';
 import {i18n} from '../../service/localization';
 import {withMainContext} from '../../contexts';
+import {SEARCH_SCREEN} from '../../constants';
 
 class Header extends React.Component{
   _renderLeft() {
@@ -29,10 +30,17 @@ class Header extends React.Component{
   }
 
   _renderSearch() {
-    return <Appbar.Action icon='search' onPress={() => {}} />
+    const {headerProps} = this.props;
+    let options = headerProps.scene.descriptor.options;
+    if(!options.search) return null;
+    return <Appbar.Action icon='search' onPress={() => this.props.navigation.navigate(SEARCH_SCREEN)} />
   }
 
   _renderRest() {
+    const {headerProps} = this.props;
+    let options = headerProps.scene.descriptor.options;
+    console.log(121212, options);
+    if(!options.right) return null;
     return <Appbar.Action icon='more-vert' onPress={() => this.props.navigation.dispatch(DrawerActions.openDrawer())} />
   }
 

@@ -1,9 +1,18 @@
 import {Home} from '../screens/main';
 import {Loader, Settings} from '../screens/others';
 import {Map} from '../screens/map';
-import {CATALOG_SCREEN, HOME_SCREEN, LOADER_SCREEN, MAP_SCREEN, POSTS_SCREEN, SETTINGS_SCREEN} from '../constants';
+import {
+  CATALOG_SCREEN,
+  HOME_SCREEN,
+  LOADER_SCREEN,
+  MAP_SCREEN,
+  POSTS_SCREEN,
+  SEARCH_SCREEN,
+  SETTINGS_SCREEN
+} from '../constants';
 import {Catalog} from '../screens/catalog';
 import {Posts} from '../screens/news';
+import {Search} from '../screens/search';
 
 const catalogRoutes = [
   {
@@ -59,6 +68,10 @@ export default [
   {
     id: LOADER_SCREEN,
     screen: Loader,
+  },
+  {
+    id: SEARCH_SCREEN,
+    screen: Search
   },
   ...catalogRoutes,
   ...profileRoutes,

@@ -7,5 +7,7 @@
   "Posts": "Посты",
   "Settings": "Настройки",
   "Language": "Язык",
-  "DarkTheme": "Темная тема"
+  "DarkTheme": "Темная тема",
+  "TabLabels": "Название нижней навигации",
+  "Search": "Поиск"
 }

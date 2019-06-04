@@ -33,7 +33,9 @@ export default class App extends React.Component {
       toggleTheme: this._toggleTheme,
       toggleRTL: this._toggleRTL,
       changeLocale: this._changeLocale,
-      currentScreen: null
+      toggle: this._toggle,
+      currentScreen: null,
+      tabLabel: true
     };
   }
 
@@ -96,6 +98,10 @@ export default class App extends React.Component {
   _changeLocale = locale => {
     i18n.setLocale(locale);
     this.setState({locale});
+  };
+
+  _toggle = key => {
+    this.setState({[key]: !this.state[key]});
   };
 
   render() {

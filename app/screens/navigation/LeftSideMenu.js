@@ -1,6 +1,6 @@
 import React from 'react';
-import {View, ScrollView, StyleSheet} from 'react-native';
-import {Drawer, withTheme, Text, Divider} from 'react-native-paper';
+import {View, ScrollView, Image, StyleSheet} from 'react-native';
+import {Drawer, Text, Divider} from 'react-native-paper';
 import {Menus} from '../../navigation/routes';
 import config from '../../../app.json';
 import {i18n} from '../../service/localization';
@@ -11,8 +11,8 @@ class LeftSideMenu extends React.Component{
     const {context} = this.props;
     return (
       <View style={styles.header}>
-
-        <Text style={{color: context.theme.colors.accent}}>{config.expo.name.toUpperCase()}</Text>
+        <Image style={styles.image} source={require('../../assets/images/w.png')}/>
+        <Text style={{color: context.theme.colors.accent}}>{`e ${config.expo.name}`.toUpperCase()}</Text>
       </View>
     )
   }
@@ -53,9 +53,14 @@ const styles = StyleSheet.create({
     paddingLeft: 10
   },
   header: {
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     height: 50
+  },
+  image: {
+    width: 30,
+    height: 30
   }
 });
 

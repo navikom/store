@@ -5,6 +5,7 @@ export const MAP_SCREEN = 'MapScreen';
 export const CATALOG_SCREEN = 'CatalogScreen';
 export const POSTS_SCREEN = 'PostsScreen';
 export const SETTINGS_SCREEN = 'SettingsScreen';
+export const SEARCH_SCREEN = 'SearchScreen';
 
 ///////////TABS//////////
 export const CATALOG_TAB = 'Catalog';

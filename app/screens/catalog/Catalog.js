@@ -5,6 +5,7 @@ import {withTheme} from 'react-native-paper';
 class Catalog extends React.Component {
   static navigationOptions = ({navigation}) => ({
     title: 'Catalog',
+    search: true,
     right: true,
   });
   render() {

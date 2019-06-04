@@ -11,6 +11,7 @@ class Home extends React.Component {
   static navigationOptions = ({navigation}) => {
     return {
       title: 'Home',
+      search: true,
       right: true
     }
   };

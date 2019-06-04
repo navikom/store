@@ -34,7 +34,7 @@ class SettingsScreen extends React.Component {
     return (
       <MainContext.Consumer>
         {
-          ({changeLocale, rtl, toggleRTL, toggleTheme, isDark, theme}) => {
+          ({changeLocale, rtl, toggleRTL, toggleTheme, isDark, theme, tabLabel, toggle}) => {
             return (
             <View style={[styles.screen, {backgroundColor: theme.colors.background}]}>
               <Divider/>
@@ -56,6 +56,10 @@ class SettingsScreen extends React.Component {
               <View style={styles.row}>
                 <Title>{i18n.value('DarkTheme')}</Title>
                 <Switch value={isDark} onValueChange={toggleTheme}/>
+              </View>
+              <View style={styles.row}>
+                <Title>{i18n.value('TabLabels')}</Title>
+                <Switch value={tabLabel} onValueChange={() => toggle('tabLabel')}/>
               </View>
               <Divider/>
             </View>
